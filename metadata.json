@@ -1,0 +1,8 @@
+{
+  "name": "Remix newupdate",
+  "description": "Autonomous AI-powered breaking news platform delivering real-time continuous updates, verified news digests, and intelligent SEO publishing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
