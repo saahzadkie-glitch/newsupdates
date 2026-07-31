@@ -68,7 +68,7 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <button onClick={() => onOpenStaticModal('about')} className="hover:text-white transition">
-                  About PulseAI Desk
+                  About NEWUPDATE Desk
                 </button>
               </li>
               <li>
