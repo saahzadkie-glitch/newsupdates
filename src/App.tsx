@@ -115,6 +115,19 @@ export default function App() {
     }
   }, []);
 
+  // Dynamic Title for main navigation & categories
+  useEffect(() => {
+    if (selectedArticle) return; // ArticleView manages title when an article is open
+
+    if (activeCategory) {
+      const catObj = categories.find(c => c.id === activeCategory);
+      const catName = catObj ? catObj.name : activeCategory;
+      document.title = `${catName} News & Intelligence | NEWUPDATE`;
+    } else {
+      document.title = 'NEWUPDATE - AI News & Intelligence';
+    }
+  }, [selectedArticle, activeCategory, categories]);
+
   const refreshMonetizationData = () => {
     setAffiliateProducts(MonetizationStorageService.getAffiliateProducts());
     setSponsoredSubmissions(MonetizationStorageService.getSponsoredSubmissions());

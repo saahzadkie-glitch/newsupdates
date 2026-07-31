@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Article, AdPlacement } from '../types';
 import { AdBanner } from './AdBanner';
+import { RelatedProducts } from './RelatedProducts';
 import {
   Clock,
   Eye,
@@ -55,6 +56,47 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
   const [comments, setComments] = useState(article.comments || []);
   const [newCommentText, setNewCommentText] = useState('');
   const [newCommentName, setNewCommentName] = useState('');
+
+  // Dynamic SEO document title and meta description for article
+  useEffect(() => {
+    const originalTitle = document.title;
+    const metaDescriptionTag = document.querySelector('meta[name="description"]');
+    const originalDescription = metaDescriptionTag ? metaDescriptionTag.getAttribute('content') : '';
+
+    const ogTitleTag = document.querySelector('meta[property="og:title"]');
+    const originalOgTitle = ogTitleTag ? ogTitleTag.getAttribute('content') : '';
+
+    const ogDescTag = document.querySelector('meta[property="og:description"]');
+    const originalOgDesc = ogDescTag ? ogDescTag.getAttribute('content') : '';
+
+    const articleTitle = `${article.title} | NEWUPDATE - AI News & Intelligence`;
+    const articleSummary = article.summary || article.excerpt || article.title;
+
+    document.title = articleTitle;
+
+    if (metaDescriptionTag) {
+      metaDescriptionTag.setAttribute('content', articleSummary);
+    }
+    if (ogTitleTag) {
+      ogTitleTag.setAttribute('content', article.title);
+    }
+    if (ogDescTag) {
+      ogDescTag.setAttribute('content', articleSummary);
+    }
+
+    return () => {
+      document.title = originalTitle;
+      if (metaDescriptionTag && originalDescription !== null) {
+        metaDescriptionTag.setAttribute('content', originalDescription);
+      }
+      if (ogTitleTag && originalOgTitle !== null) {
+        ogTitleTag.setAttribute('content', originalOgTitle);
+      }
+      if (ogDescTag && originalOgDesc !== null) {
+        ogDescTag.setAttribute('content', originalOgDesc);
+      }
+    };
+  }, [article]);
 
   // Scroll Progress listener
   useEffect(() => {
@@ -362,6 +404,9 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
         {/* In-Article Advertisement Slot */}
         {inArticleAd && <AdBanner placement={inArticleAd} />}
 
+        {/* Amazon Related Affiliate Products */}
+        <RelatedProducts category={article.category} relatedProducts={article.relatedProducts} />
+
         {/* AI FAQs Section */}
         {article.faqs && article.faqs.length > 0 && (
           <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
@@ -533,6 +578,11 @@ export const ArticleView: React.FC<ArticleViewProps> = ({
             </div>
           </div>
         )}
+
+        {/* Amazon Affiliate Disclosure */}
+        <p className="text-center text-xs text-slate-500 dark:text-slate-400 pt-6 border-t border-slate-200 dark:border-slate-800 italic font-medium">
+          As an Amazon Associate, I earn from qualifying purchases.
+        </p>
       </div>
     </article>
   );

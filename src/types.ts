@@ -69,6 +69,11 @@ export interface Article {
   relatedArticleIds?: string[];
   comments: Comment[];
   audioUrl?: string; // Optional audio narration link or generated TTS
+  relatedProducts?: {
+    name: string;
+    searchTerm: string;
+    description?: string;
+  }[];
 }
 
 export interface AdPlacement {

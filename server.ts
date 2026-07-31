@@ -203,6 +203,11 @@ Return a valid JSON object matching this structure EXACTLY:
     { "question": "Key question readers will ask", "answer": "Clear 2-sentence explanation" },
     { "question": "Second relevant question", "answer": "Clear 2-sentence explanation" }
   ],
+  "relatedProducts": [
+    { "name": "Product or book name relevant to this article topic", "searchTerm": "Amazon search keywords" },
+    { "name": "Second relevant product or gear name", "searchTerm": "Amazon search keywords" },
+    { "name": "Third relevant product or tool name", "searchTerm": "Amazon search keywords" }
+  ],
   "tags": ["Tag1", "Tag2", "Tag3", "Tag4"],
   "metaTitle": "SEO title under 60 characters",
   "metaDescription": "SEO meta description under 155 characters ending with a call to action",
@@ -260,6 +265,7 @@ Return a valid JSON object matching this structure EXACTLY:
       status: 'published',
       metaTitle: data.metaTitle || data.title,
       metaDescription: data.metaDescription || data.summary,
+      relatedProducts: data.relatedProducts || [],
       comments: []
     };
 
